@@ -6,7 +6,7 @@ namespace MarketingBox.PasswordApi.Models
 {
     public class RecoverPasswordRequestHttp: ValidatableEntity
     {
-        [Required, IsValidPassword]
+        [Required, IsValidPassword, StringLength(128, MinimumLength = 1)]
         public string NewPassword { get; set; }
     }
 }

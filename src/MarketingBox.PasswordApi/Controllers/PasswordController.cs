@@ -1,13 +1,11 @@
 using System.Threading.Tasks;
 using MarketingBox.PasswordApi.Models;
 using MarketingBox.Sdk.Common.Extensions;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MarketingBox.PasswordApi.Controllers
 {
     [ApiController]
-    [Authorize]
     [Route("/api/[controller]")]
     public class PasswordController : ControllerBase
     {
@@ -15,7 +13,7 @@ namespace MarketingBox.PasswordApi.Controllers
         {
         }
 
-        [HttpPost("users/{userId}")]
+        [HttpPost("recover")]
         public async Task<IActionResult> SendLinkAsync(
             [FromBody] ForgotPasswordRequestHttp request)
         {
