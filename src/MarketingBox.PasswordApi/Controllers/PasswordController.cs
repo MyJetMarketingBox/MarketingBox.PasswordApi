@@ -22,16 +22,16 @@ namespace MarketingBox.PasswordApi.Controllers
             return Ok();
         }
         
-        [HttpGet("{uniqueId}")]
-        public async Task<IActionResult> GetRecoverPageAsync([FromRoute] string uniqueId)
+        [HttpGet("{token}")]
+        public async Task<IActionResult> GetRecoverPageAsync([FromRoute] string token)
         {
             await Task.CompletedTask;
             return Ok();
         }
         
-        [HttpPost("{uniqueId}")]
+        [HttpPost("{token}")]
         public async Task<IActionResult> SendLinkAsync(
-            [FromRoute] string uniqueId,
+            [FromRoute] string token,
             [FromBody] RecoverPasswordRequestHttp request)
         {
             request.ValidateEntity();

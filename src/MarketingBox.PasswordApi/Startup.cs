@@ -52,11 +52,7 @@ namespace MarketingBox.PasswordApi
 
             services.AddAuthorization();
             services.AddControllers();
-            services.AddSwaggerDocument(o =>
-            {
-                o.Title = "Password API";
-                o.GenerateEnumMappingDescription = true;
-            });
+            services.SetupSwaggerDocumentation();
 
             services.AddHostedService<ApplicationLifetimeManager>();
 
