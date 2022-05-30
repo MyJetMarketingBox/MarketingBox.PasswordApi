@@ -14,7 +14,7 @@ namespace MarketingBox.PasswordApi
 {
     public class Program
     {
-        public const string SettingsFileName = ".marketingboxauthapi";
+        public const string SettingsFileName = ".marketingboxpasswordapi";
 
         public static SettingsModel Settings { get; private set; }
 

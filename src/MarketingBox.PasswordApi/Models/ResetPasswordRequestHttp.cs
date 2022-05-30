@@ -4,7 +4,7 @@ using MarketingBox.Sdk.Common.Models;
 
 namespace MarketingBox.PasswordApi.Models
 {
-    public class RecoverPasswordRequestHttp: ValidatableEntity
+    public class ResetPasswordRequestHttp: ValidatableEntity
     {
         [Required, IsValidPassword, StringLength(128, MinimumLength = 1)]
         public string NewPassword { get; set; }
