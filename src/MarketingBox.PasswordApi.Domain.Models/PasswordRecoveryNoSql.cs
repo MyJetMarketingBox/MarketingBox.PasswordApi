@@ -1,4 +1,3 @@
-using System;
 using MyNoSqlServer.Abstractions;
 
 namespace MarketingBox.PasswordApi.Domain.Models

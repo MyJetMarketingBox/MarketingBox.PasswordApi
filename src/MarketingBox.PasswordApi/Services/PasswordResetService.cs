@@ -14,13 +14,13 @@ namespace MarketingBox.PasswordApi.Services
             _publisherPasswordReset = publisherPasswordReset;
         }
 
-        public async Task ResetPasswordMessageAsync(string userId, string newPassword, string token)
+        public async Task ResetPasswordMessageAsync(string userId, string newPassword, string tenantId)
         {
             await _publisherPasswordReset.PublishAsync(new PasswordResetMessage
             {
                 UserId = userId,
                 NewPassword = newPassword,
-                Token = token,
+                TenantId = tenantId,
             });
         }
     }

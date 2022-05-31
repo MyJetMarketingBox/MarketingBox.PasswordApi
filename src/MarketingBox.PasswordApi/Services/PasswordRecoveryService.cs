@@ -39,7 +39,7 @@ namespace MarketingBox.PasswordApi.Services
             var token = Guid.NewGuid().ToString("N");
 
             await _recoveryNoSql.UpsertEntityAsync(user.ExternalUserId, token, user.TenantId);
-            await _emailService.SendEmail(email, token);
+            await _emailService.SendEmail(email, token, user.Username);
         }
     }
 }

@@ -4,6 +4,6 @@ namespace MarketingBox.PasswordApi.Services.Interfaces
 {
     public interface IPasswordResetService
     {
-        Task ResetPasswordMessageAsync(string userId, string newPassword, string token);
+        Task ResetPasswordMessageAsync(string userId, string newPassword, string tenantId);
     }
 }

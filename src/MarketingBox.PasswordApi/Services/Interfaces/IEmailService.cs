@@ -4,6 +4,6 @@ namespace MarketingBox.PasswordApi.Services.Interfaces
 {
     public interface IEmailService
     {
-        Task SendEmail(string email, string token);
+        Task SendEmail(string email, string token, string userName);
     }
 }

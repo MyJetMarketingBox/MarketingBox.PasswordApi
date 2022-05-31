@@ -33,6 +33,7 @@ namespace MarketingBox.PasswordApi.Modules
             builder.RegisterMyNoSqlWriter<PasswordRecoveryNoSql>(
                 Program.ReloadedSettings(e => e.MyNoSqlWriterUrl),
                 PasswordRecoveryNoSql.TableName);
+            builder.RegisterMyNoSqlReader<PasswordRecoveryNoSql>(noSqlClient, PasswordRecoveryNoSql.TableName);
         }
     }
 }

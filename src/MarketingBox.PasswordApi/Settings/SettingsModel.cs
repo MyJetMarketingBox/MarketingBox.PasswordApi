@@ -32,8 +32,11 @@ namespace MarketingBox.PasswordApi.Settings
         [YamlProperty("MarketingBoxPasswordApi.EncryptionSecret")]
         public string EncryptionSecret { get; set; }
 
-        [YamlProperty("MarketingBoxPasswordApi.RecoverPasswordPageUrl")]
-        public string RecoverPasswordPageUrl { get; set; }
+        [YamlProperty("MarketingBoxPasswordApi.RecoveryPasswordPageUrl")]
+        public string RecoveryPasswordPageUrl { get; set; }
+
+        [YamlProperty("MarketingBoxPasswordApi.PasswordApiUrl")]
+        public string PasswordApiUrl { get; set; }
 
         [YamlProperty("MarketingBoxPasswordApi.RecoveryTokenLifetimeInHours")]
         public int RecoveryTokenLifetimeInHours { get; set; }

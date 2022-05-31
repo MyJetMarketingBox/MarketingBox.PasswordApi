@@ -67,7 +67,7 @@ namespace MarketingBox.PasswordApi.Controllers
 
                 _recoveryNoSql.GetEntity(token);
 
-                return RedirectPermanent(Program.Settings.RecoverPasswordPageUrl);
+                return RedirectPermanent(Program.Settings.RecoveryPasswordPageUrl);
             }
             catch (Exception ex)
             {
