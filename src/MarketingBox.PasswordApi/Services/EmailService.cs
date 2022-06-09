@@ -19,7 +19,7 @@ namespace MarketingBox.PasswordApi.Services
         }
 
         private static string GetUrl(string token) =>
-            $"{Program.Settings.PasswordApiUrl}/api/passwordrecovery/{token}";
+            $"{Program.Settings.RecoveryPasswordPageUrl}/{token}";
 
         public async Task SendEmail(string email, string token, string userName)
         {

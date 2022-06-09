@@ -1,4 +1,3 @@
-using System;
 using System.Threading.Tasks;
 using MarketingBox.PasswordApi.Models;
 using MarketingBox.PasswordApi.Services.Interfaces;
@@ -34,46 +33,22 @@ namespace MarketingBox.PasswordApi.Controllers
         public async Task<IActionResult> RecoverPassword(
             [FromBody] ForgotPasswordRequestHttp request)
         {
-            try
-            {
-                request.ValidateEntity();
-            }
-            catch (Exception e)
-            {
-                return e.Failed();
-            }
-
-            try
-            {
-                await _recoveryService.RecoverPassword(request.Email);
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, "Exception occured while recovering password.");
-                return Ok();
-            }
+            request.ValidateEntity();
+            await _recoveryService.RecoverPassword(request.Email);
+            return Ok();
         }
 
         [HttpGet("{token}")]
-        public IActionResult GetRecoverPageAsync([FromRoute] string token)
+        public IActionResult GetValidateTokenAsync([FromRoute] string token)
         {
-            try
+            if (string.IsNullOrWhiteSpace(token))
             {
-                if (string.IsNullOrWhiteSpace(token))
-                {
-                    throw new BadRequestException("Cannot process empty token.");
-                }
-
-                _recoveryNoSql.GetEntity(token);
-
-                return RedirectPermanent(Program.Settings.RecoveryPasswordPageUrl);
+                throw new BadRequestException("Cannot process empty token.");
             }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Exception occured while getting recovering page.");
-                return ex.Failed();
-            }
+
+            _recoveryNoSql.GetEntity(token);
+
+            return Ok();
         }
 
         [HttpPost("{token}")]
@@ -81,26 +56,18 @@ namespace MarketingBox.PasswordApi.Controllers
             [FromRoute] string token,
             [FromBody] ResetPasswordRequestHttp request)
         {
-            try
-            {
-                request.ValidateEntity();
+            request.ValidateEntity();
 
-                var entity = _recoveryNoSql.GetEntity(token);
+            var entity = _recoveryNoSql.GetEntity(token);
 
-                await _passwordResetService.ResetPasswordMessageAsync(
-                    entity.UserId,
-                    request.NewPassword,
-                    entity.TenantId);
+            await _passwordResetService.ResetPasswordMessageAsync(
+                entity.UserId,
+                request.NewPassword,
+                entity.TenantId);
 
-                await _recoveryNoSql.DeleteEntityAsync(entity.UserId);
+            await _recoveryNoSql.DeleteEntityAsync(entity.UserId);
 
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Exception occured while sending new password message.");
-                return ex.Failed();
-            }
+            return Ok();
         }
     }
 }

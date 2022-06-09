@@ -3,6 +3,7 @@ using System.Reflection;
 using Autofac;
 using AutoWrapper;
 using MarketingBox.PasswordApi.Modules;
+using MarketingBox.Sdk.Common.Extensions;
 using MarketingBox.Sdk.Common.Models.RestApi;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -68,6 +69,7 @@ namespace MarketingBox.PasswordApi
                     UseCustomSchema = true,
                     IgnoreWrapForOkRequests = true
                 });
+            app.UseExceptions();
 
             app.UseRouting();
 
