@@ -1,7 +1,7 @@
 ﻿using Autofac;
-using MarketingBox.Auth.Service.Client;
-using Microsoft.Extensions.Logging;
-using MyJetWallet.Sdk.NoSql;
+using MarketingBox.PasswordApi.Domain.Models;
+using MarketingBox.PasswordApi.Services;
+using MarketingBox.PasswordApi.Services.Interfaces;
 
 namespace MarketingBox.PasswordApi.Modules
 {
@@ -9,10 +9,18 @@ namespace MarketingBox.PasswordApi.Modules
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterAuthServiceClient(Program.Settings.AuthServiceUrl);
-            var noSqlClient = builder.CreateNoSqlClient(
-                Program.ReloadedSettings(e => e.MyNoSqlReaderHostPort).Invoke(),
-                new LoggerFactory());
+            builder.RegisterType<EmailService>()
+                .As<IEmailService>()
+                .SingleInstance();
+            builder.RegisterType<PasswordRecoveryNoSqlService>()
+                .As<IPasswordRecoveryNoSqlService>()
+                .SingleInstance();
+            builder.RegisterType<PasswordRecoveryService>()
+                .As<IPasswordRecoveryService>()
+                .SingleInstance();
+            builder.RegisterType<PasswordResetService>()
+                .As<IPasswordResetService>()
+                .SingleInstance();
         }
     }
 }

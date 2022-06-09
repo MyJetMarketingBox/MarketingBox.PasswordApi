@@ -5,28 +5,43 @@ namespace MarketingBox.PasswordApi.Settings
 {
     public class SettingsModel
     {
-        [YamlProperty("MarketingBoxAuthApi.SeqServiceUrl")]
+        [YamlProperty("MarketingBoxPasswordApi.SeqServiceUrl")]
         public string SeqServiceUrl { get; set; }
 
-        [YamlProperty("MarketingBoxAuthApi.ZipkinUrl")]
+        [YamlProperty("MarketingBoxPasswordApi.ZipkinUrl")]
         public string ZipkinUrl { get; set; }
 
-        [YamlProperty("MarketingBoxAuthApi.ElkLogs")]
+        [YamlProperty("MarketingBoxPasswordApi.ElkLogs")]
         public LogElkSettings ElkLogs { get; set; }
 
-        [YamlProperty("MarketingBoxAuthApi.AuthServiceUrl")]
-        public string AuthServiceUrl { get; set; }
+        [YamlProperty("MarketingBoxPasswordApi.MyNoSqlWriterUrl")]
+        public string MyNoSqlWriterUrl { get; set; }
 
-        [YamlProperty("MarketingBoxAuthApi.JwtAudience")]
-        public string JwtAudience { get; set; }
-
-        [YamlProperty("MarketingBoxAuthApi.JwtSecret")]
-        public string JwtSecret { get; set; }
-
-        [YamlProperty("MarketingBoxAuthApi.JwtTtl")]
-        public string JwtTtl { get; set; }
-
-        [YamlProperty("MarketingBoxAuthApi.MyNoSqlReaderHostPort")]
+        [YamlProperty("MarketingBoxPasswordApi.MyNoSqlReaderHostPort")]
         public string MyNoSqlReaderHostPort { get; set; }
+
+        [YamlProperty("MarketingBoxPasswordApi.MarketingBoxServiceBusHostPort")]
+        public string MarketingBoxServiceBusHostPort { get; set; }
+
+        [YamlProperty("MarketingBoxPasswordApi.AuthServiceUrl")]
+        public string AuthServiceUrl { get; set; }
+        
+        [YamlProperty("MarketingBoxPasswordApi.EncryptionSalt")]
+        public string EncryptionSalt { get; set; }
+
+        [YamlProperty("MarketingBoxPasswordApi.EncryptionSecret")]
+        public string EncryptionSecret { get; set; }
+
+        [YamlProperty("MarketingBoxPasswordApi.RecoveryPasswordPageUrl")]
+        public string RecoveryPasswordPageUrl { get; set; }
+
+        [YamlProperty("MarketingBoxPasswordApi.PasswordApiUrl")]
+        public string PasswordApiUrl { get; set; }
+
+        [YamlProperty("MarketingBoxPasswordApi.RecoveryTokenLifetimeInHours")]
+        public int RecoveryTokenLifetimeInHours { get; set; }
+        
+        [YamlProperty("MarketingBoxPasswordApi.RecoveryCacheLength")]
+        public int RecoveryCacheLength { get; set; }
     }
 }

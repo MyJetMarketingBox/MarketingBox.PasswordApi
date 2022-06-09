@@ -8,7 +8,7 @@ namespace MarketingBox.PasswordApi
         {
             services.AddSwaggerDocument(o =>
             {
-                o.Title = "Auth API";
+                o.Title = "Password API";
                 o.GenerateEnumMappingDescription = true;
 
                 //o.AddSecurity("Bearer", Enumerable.Empty<string>(),

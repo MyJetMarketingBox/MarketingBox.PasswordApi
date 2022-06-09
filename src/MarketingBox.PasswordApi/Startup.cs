@@ -1,18 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
-using System.Text;
 using Autofac;
 using AutoWrapper;
 using MarketingBox.PasswordApi.Modules;
+using MarketingBox.Sdk.Common.Extensions;
 using MarketingBox.Sdk.Common.Models.RestApi;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.IdentityModel.Tokens;
 using MyJetWallet.Sdk.GrpcSchema;
 using MyJetWallet.Sdk.Service;
 using Prometheus;
@@ -50,42 +47,13 @@ namespace MarketingBox.PasswordApi
                  });
             });
 
-            services.AddAuthorization();
-            services.AddControllers();
-            services.AddSwaggerDocument(o =>
-            {
-                o.Title = "Password API";
-                o.GenerateEnumMappingDescription = true;
-            });
-
             services.AddHostedService<ApplicationLifetimeManager>();
 
-            services
-                .AddAuthentication(ConfigureAuthenticationOptions)
-                .AddJwtBearer(ConfigureJwtBearerOptions);
+            services.AddControllers();
+
+            services.SetupSwaggerDocumentation();
 
             services.AddMyTelemetry("MB-", Program.Settings.ZipkinUrl);
-        }
-
-        protected virtual void ConfigureJwtBearerOptions(JwtBearerOptions options)
-        {
-            options.RequireHttpsMetadata = false;
-            options.SaveToken = true;
-            options.TokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Program.Settings.JwtSecret)),
-                ValidateIssuer = false,
-                ValidateAudience = true,
-                ValidAudience = Program.Settings.JwtAudience,
-                ValidateLifetime = true
-            };
-        }
-
-        protected virtual void ConfigureAuthenticationOptions(AuthenticationOptions options)
-        {
-            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -94,21 +62,18 @@ namespace MarketingBox.PasswordApi
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            app.UseRouting();
-
-            app.UseCors(_allowAllOrigins);
-
-            app.UseAuthentication();
-            app.UseAuthorization();
-
+            
             app.UseApiResponseAndExceptionWrapper<ApiResponseMap>(
                 new AutoWrapperOptions
                 {
                     UseCustomSchema = true,
                     IgnoreWrapForOkRequests = true
                 });
+            app.UseExceptions();
 
+            app.UseRouting();
+
+            app.UseCors(_allowAllOrigins);
 
             app.UseMetricServer();
 
@@ -144,6 +109,7 @@ namespace MarketingBox.PasswordApi
         public void ConfigureContainer(ContainerBuilder builder)
         {
             builder.RegisterModule<SettingsModule>();
+            builder.RegisterModule<ClientModule>();
             builder.RegisterModule<ServiceModule>();
         }
         public ISet<int> ModelStateDictionaryResponseCodes { get; }
