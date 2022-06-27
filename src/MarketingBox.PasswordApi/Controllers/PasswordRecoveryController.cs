@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using MarketingBox.PasswordApi.Models;
 using MarketingBox.PasswordApi.Services.Interfaces;
@@ -34,7 +35,15 @@ namespace MarketingBox.PasswordApi.Controllers
             [FromBody] ForgotPasswordRequestHttp request)
         {
             request.ValidateEntity();
-            await _recoveryService.RecoverPassword(request.Email);
+            try
+            {
+                await _recoveryService.RecoverPassword(request.Email);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Could not recover password.");
+            }
+
             return Ok();
         }
 
